@@ -58,6 +58,8 @@ async function login(request, response) {
     try {
         const { email, password } = request.body;
 
+        console.log(email, '    ', password);
+
         const user = await FecthUserByEmail(email);
 
         if (!user) {
