@@ -9,9 +9,11 @@ app.use(bodyParser.json());
 
 const UserRoutes = require('./routes/UserRoutes');
 const ChatRoutes = require('./routes/ChatRoutes');
+const RecordRoutes = require('./routes/RecordRoutes');
 
 app.use('/user', UserRoutes);
 app.use('/chat', ChatRoutes);
+app.use('/record', RecordRoutes);
 
 const port = 4000;
 

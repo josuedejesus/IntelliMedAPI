@@ -14,7 +14,6 @@ async function insertChat(chatData) {
         console.log(chatData);
         const result = await knex('chat').insert(chatData).returning('chat_id');
         
-        console.log(result);
         return result[0];
     } catch (error) {
         console.log(error);
@@ -51,9 +50,19 @@ async function fetchChatsByUser(userId) {
     }
 }
 
+async function UpdateChat(chat) {
+    try {
+        const result = await knex('chat').update('title', chat.title).where('chat_id', chat.chat_id);
+        return result;
+    } catch(error) {
+        throw error;
+    }
+}
+
 module.exports = {
     insertChat,
     insertMessage,
     fetchChatsByUser,
-    fetchMessages
+    fetchMessages,
+    UpdateChat
 }

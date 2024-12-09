@@ -9,6 +9,16 @@ const knex = require("knex") ({
     },
 });
 
+async function FecthUser(userId) {
+    try {
+        let user = await knex("user").select().where("user_id", userId);
+        [user] = JSON.parse(JSON.stringify(user));
+        return user;
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 async function FecthUserByEmail(email) {
     try {
         let user = await knex("user").select().where("email", email);
@@ -38,8 +48,41 @@ async function InsertUser(userData) {
     }
 }
 
+async function UpdateUserData(userId, updatedItems) {
+    try {
+        const updates = {};
+
+        updatedItems.forEach(item => {
+            const key = Object.keys(item)[0];
+            const value = item[key];
+            updates[key] = value;
+        });
+
+        const result = await knex('user')
+            .where('user_id', userId)
+            .update(updates);
+
+        return result;
+    } catch(error) {
+        throw error;
+    }
+}
+
+async function DeleteChat(chatId) {
+    try {
+        const result = await knex('chat').delete().where('chat_id', chatId);
+        return result;
+    } catch(error) {
+        throw error;
+    }
+}
+
+
 module.exports = {
     FecthUserByEmail,
     FetchUserByPhone,
     InsertUser,
+    UpdateUserData,
+    FecthUser,
+    DeleteChat
 }
